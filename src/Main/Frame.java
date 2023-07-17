@@ -4,9 +4,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 
-public class Frame extends JFrame{
-
-    
+public class Frame extends JFrame{    
     private Panel panel;
 
     public Frame() {
@@ -23,7 +21,7 @@ public class Frame extends JFrame{
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                panel.getPlayer().movePlayer(e);
+                panel.getPlayer().playerInput(e);
             }
         });
         this.pack();
