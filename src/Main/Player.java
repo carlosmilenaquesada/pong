@@ -2,12 +2,11 @@ package Main;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import javax.swing.*;
 
-public class Player extends JPanel implements KeyListener {
+public class Player extends JPanel {
 
-    private int playerX = 400;
+    private int playerX = 200;
     public static final int PLAYER_Y = 400;
     public static final int PLAYER_WIDTH = 100;
     public static final int PLAYER_HEIGHT = 20;
@@ -17,14 +16,12 @@ public class Player extends JPanel implements KeyListener {
         this.setBounds(playerX, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT);
 
     }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
+    
+    public int getPlayerX(){
+        return this.playerX;
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
+    public void movePlayer(KeyEvent e) {
         System.out.println("movimiento");
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT && playerX >= 10) {
@@ -41,10 +38,6 @@ public class Player extends JPanel implements KeyListener {
             }
         }
 
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
     }
 
 }

@@ -13,8 +13,8 @@ public class Panel extends JPanel {
         this.setBackground(Color.PINK);
         this.setPreferredSize(new Dimension(500, 500));
         
-        this.ball = new Ball();
         this.player = new Player();
+        this.ball = new Ball(this.player);
         
         this.add(player);
         this.add(ball);

@@ -1,6 +1,7 @@
 package Main;
 
-import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.*;
 
 public class Frame extends JFrame{
@@ -15,13 +16,16 @@ public class Frame extends JFrame{
     private void initializer() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        this.setVisible(true);
         
         this.panel = new Panel();       
         
         this.add(this.panel);
-        this.addKeyListener(this.panel.getPlayer());
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                panel.getPlayer().movePlayer(e);
+            }
+        });
         this.pack();
     }
-
 }
