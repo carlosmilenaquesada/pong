@@ -4,12 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Ball extends JPanel {
+
     //ATRIBUTOS
     //--------------------------------------------------------------------------
     //Estáticos
     public static final int BALL_WIDTH = 20;
     public static final int BALL_HEIGHT = 20;
-    
+
     //De instancia
     private int ballXPosition;
     private int ballYPosition;
@@ -19,11 +20,13 @@ public class Ball extends JPanel {
     //CONSTRUCTORES
     //--------------------------------------------------------------------------
     //Por parámetros
-    public Ball(int ballXPosition, int ballYPosition) {        
+    public Ball(int ballXPosition, int ballYPosition) {
         this.ballXPosition = ballXPosition;
         this.ballXPosition = ballYPosition;
-        this.ballXDirection = (int) (Math.random() * 3) - 1;
-        this.ballYDirection = -1;
+        do {
+            this.ballXDirection = (int) (Math.random() * 9) - 4;
+        } while (this.ballXDirection == 0);
+        this.ballYDirection = -4;
         this.setBackground(Color.red);
         this.setBounds(ballXPosition, ballXPosition, BALL_WIDTH, BALL_HEIGHT);
     }
@@ -73,20 +76,20 @@ public class Ball extends JPanel {
         g2D.setPaint(Color.BLACK);
         g2D.fillOval(0, 0, BALL_WIDTH, BALL_HEIGHT);
     }
-    
+
     //De instancia
-    public void changeXBallDirection(){
+    public void changeXBallDirection() {
         this.ballXDirection *= -1;
     }
-    
-    public void changeYBallDirection(){
+
+    public void changeYBallDirection() {
         this.ballYDirection *= -1;
     }
-    
-    public void updateBallPosition(){
+
+    public void updateBallPosition() {
         this.ballXPosition += this.ballXDirection;
         this.ballYPosition += this.ballYDirection;
         this.setBounds(this.ballXPosition, this.ballYPosition, Ball.BALL_WIDTH, Ball.BALL_HEIGHT);
     }
-    
+
 }
