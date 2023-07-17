@@ -20,26 +20,27 @@ public class Player extends JPanel implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        
+
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        
+        System.out.println("movimiento");
+
         if (e.getKeyCode() == KeyEvent.VK_LEFT && playerX >= 10) {
-            System.out.println("left");
+
             playerX -= 10;
             this.setBounds(playerX, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT);
             repaint();
         } else {
             if (e.getKeyCode() == KeyEvent.VK_RIGHT && playerX <= 390) {
-                System.out.println("right");
+
                 playerX += 10;
                 this.setBounds(playerX, PLAYER_Y, PLAYER_WIDTH, PLAYER_HEIGHT);
                 repaint();
             }
         }
-        System.out.println(playerX);
+
     }
 
     @Override

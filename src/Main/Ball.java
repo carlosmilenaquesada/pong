@@ -2,19 +2,54 @@ package Main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Ball extends JPanel{
-    public static final int BALL_X = 240;
-    public static final int BALL_Y = 300;
+public class Ball extends JPanel implements ActionListener {
+
+    private int ballX;
+    private int ballY;
+
+    private int ballXDirection;
+    private int ballYDirection;
+
     public static final int BALL_WIDTH = 20;
     public static final int BALL_HEIGHT = 20;
 
+    private Timer timer;
+
     public Ball() {
         this.setBackground(Color.red);
-        this.setBounds(BALL_X, BALL_Y, BALL_WIDTH, BALL_HEIGHT);
+        this.ballX = 240;
+        this.ballY = 300;
+        this.ballXDirection = -2;
+        this.ballYDirection = -2;
+        this.setBounds(ballX, ballY, BALL_WIDTH, BALL_HEIGHT);
+        timer = new Timer(10, this);
+        timer.start();
     }
-    
-    
-    
+
+    @Override
+    public void paint(Graphics g) {
+        //super.paint(g);
+        Graphics2D g2D = (Graphics2D) g;
+        g2D.setPaint(Color.BLACK);
+        g2D.fillOval(0, 0, BALL_WIDTH, BALL_HEIGHT);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (this.ballX <= 0 || this.ballX >= 480) {
+            this.ballXDirection *= -1;
+        }
+        this.ballX += this.ballXDirection;
+        if (this.ballY <= 0 || this.ballY >= 380) {
+            this.ballYDirection *= -1;
+        }        
+        this.ballY += this.ballYDirection;       
+        this.setBounds(ballX, ballY, BALL_WIDTH, BALL_HEIGHT);
+        
+        
+    }
 
 }
