@@ -3,12 +3,15 @@ package Main;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class Panel extends JPanel implements ActionListener {
 
     private Player player;
     private Ball ball;
+    private ArrayList<Block> blocks;
+    private ArrayList<Block> frontBlocks;
 
     private Timer timer;
 
@@ -18,11 +21,15 @@ public class Panel extends JPanel implements ActionListener {
         this.setLayout(null);
         this.setBackground(Color.PINK);
         this.setPreferredSize(new Dimension(500, 500));
+
         this.player = new Player((this.getPreferredSize().width - Player.PLAYER_WIDTH) / 2, this.getPreferredSize().width);
         this.ball = new Ball((this.getPreferredSize().width - Ball.BALL_WIDTH) / 2, Player.PLAYER_HEIGHT + 20);
+        this.blocks = this.buildBlocks();
+        this.frontBlocks = new ArrayList<>(blocks.subList(blocks.size() - 10, blocks.size()));
 
-        this.add(player);
-        this.add(ball);
+        this.add(this.player);
+        this.add(this.ball);
+        this.addBlocks(this.blocks);
 
         this.timer = new Timer(10, this);
         this.timer.start();
@@ -31,6 +38,30 @@ public class Panel extends JPanel implements ActionListener {
     public Player getPlayer() {
         return this.player;
     }
+
+    //MÉTODOS
+    //--------------------------------------------------------------------------
+    //Auxiliares
+    private ArrayList<Block> buildBlocks() {
+        ArrayList<Block> blocksArray = new ArrayList<>();
+        for (int yPos = 0; yPos < (Block.BLOCK_HEIGHT * 5); yPos = yPos + Block.BLOCK_HEIGHT) {
+            for (int xPos = 0; xPos < this.getPreferredSize().width; xPos = xPos + Block.BLOCK_WIDTH) {
+                blocksArray.add(new Block(xPos, yPos, new Color((int) (Math.random() * 16777215) + 1)));
+            }
+        }
+        return blocksArray;
+    }
+
+    private void addBlocks(ArrayList<Block> blocks) {
+        for (Block block : blocks) {
+            this.add(block);
+        }
+    }
+
+    
+    //DADO EL PUNTO X DE LA  BOLA, LOCALIZAMOS EL BLOQUE DEL GRUPO DEL FRENTE EN ESE PUNTO X.
+        //SI DICHO BLOQUE TIENE un valor de Y MAYOR O IGUAL AL DE LA BOLA, SE DESTRUYE.
+    
 
     @Override
     public void actionPerformed(ActionEvent e) {

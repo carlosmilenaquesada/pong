@@ -32,11 +32,19 @@ public class Player extends JPanel {
     public int getPlayerXPosition(){
         return this.playerXPosition;
     }
-    
+
+    public int getPlayerXMaxBound(){
+        return this.playerXMaxBound;
+    }
     //Setters
     public void setPlayerXPosition(int playerXPosition){
         this.playerXPosition = playerXPosition;
     }
+    
+    public void setPlayerXMaxBound(int playerXMaxBound){
+        this.playerXMaxBound = playerXMaxBound;
+    }
+        
 
     //MÉTODOS
     //--------------------------------------------------------------------------
