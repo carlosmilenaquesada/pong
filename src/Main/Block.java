@@ -8,7 +8,7 @@ public class Block extends JPanel{
     //--------------------------------------------------------------------------
     //Estáticos
     public static final int BLOCK_WIDTH = 50;
-    public static final int BLOCK_HEIGHT = 20;
+    public static final int BLOCK_HEIGHT = 30;
     
     //De instancia
     private int blockXPosition;
@@ -23,7 +23,7 @@ public class Block extends JPanel{
         this.blockYPosition = blockYPosition;
         this.color = color;
         this.setBackground(color);
-        this.setBounds(blockXPosition, blockYPosition, 50, 20);
+        this.setBounds(blockXPosition, blockYPosition, 50, 30);
     }
     
     //GETTERS Y SETTERS
