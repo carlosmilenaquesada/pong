@@ -45,91 +45,92 @@ public class Panel extends JPanel implements ActionListener {
 
         for (int row = 0; row < blockMatrix.length; row++) {
             for (int column = 0; column < blockMatrix[0].length; column++) {
-                blockMatrix[row][column] = new Block(column * 50, row * 20, new Color((int) (Math.random() * 16777215) + 1));
+                blockMatrix[row][column] = new Block((column * Block.BLOCK_WIDTH) + 1, (row * Block.BLOCK_HEIGHT) + 1, new Color((int) (Math.random() * 16777215) + 1));
                 this.add(blockMatrix[row][column]);
             }
         }
         return blockMatrix;
     }
 
-    private void destroyBlock(int row, int column) {
+    private boolean destroyBlock(int row, int column) {
+        boolean destroyed = false;
         if (this.blocks[row][column] != null) {
             this.blocks[row][column].setVisible(false);
             this.blocks[row][column] = null;
+            destroyed = true;
         }
+        return destroyed;
     }
 
     //--------------------------------------------------------------------------
-    private void ballPointAction_TOPLEFT(int xPoint, int yPoint) {
-
-        if (xPoint >= 51 && xPoint <= 451) {
-            if (yPoint >= 1 && yPoint <= 150) {
-                if (xPoint % 50 == 1) {
-                    this.destroyBlock((yPoint - 1) / 30, (xPoint / 50) - 1);
-                }
-            }
-        }
+    private boolean ballPointActionTop(int xPointLeftCorner, int xPointRightCorner) {
+        boolean destroyLeft = false;
+        boolean destroyRight = false;
+        int yPoint = ball.getYTopSide();
 
         if (yPoint >= 31 && yPoint <= 151) {
             if (yPoint % 30 == 1) {
-                this.destroyBlock((yPoint / 30) - 1, (xPoint - 1) / 50);
+                int rowIndex = (yPoint / 30) - 1;
+                destroyLeft = this.destroyBlock(rowIndex, (xPointLeftCorner - 1) / 50);
+                destroyRight = this.destroyBlock(rowIndex, (xPointRightCorner - 1) / 50);
             }
         }
+        return destroyLeft || destroyRight;
     }
 
-    //--------------------------------------------------------------------------
-    private void ballPointAction_TOPRIGHT(int xPoint, int yPoint) {//OK
+    private boolean ballPointActionBottom(int xPointLeftCorner, int xPointRightCorner) {
+        boolean destroyLeft = false;
+        boolean destroyRight = false;
+        int yPoint = ball.getYBottomSide();
 
-        if (xPoint >= 50 && xPoint <= 450) {//0
-            if (yPoint >= 1 && yPoint <= 150) {
-                if (xPoint % 50 == 0) {
-                    this.destroyBlock((yPoint - 1) / 30, xPoint / 50);
+        if (yPoint >= 30 && yPoint <= 120) {
+            if (yPoint % 30 == 0) {
+                int rowIndex = yPoint / 30;
+                destroyLeft = this.destroyBlock(rowIndex, (xPointLeftCorner - 1) / 50);
+                destroyRight = this.destroyBlock(rowIndex, (xPointRightCorner - 1) / 50);
+            }
+        }
+        return destroyLeft || destroyRight;
+    }
+
+    private boolean ballPointActionLeft(int yPointTopCorner, int yPointBottomCorner) {
+        boolean destroyTop = false;
+        boolean destroyBottom = false;
+        int xPoint = ball.getXLeftSide();
+
+        if (xPoint >= 51) {
+            if (xPoint % 50 == 1) {
+                int columIndex = (xPoint / 50) - 1;
+                if (yPointTopCorner <= 150) {
+                    destroyTop = this.destroyBlock((yPointTopCorner - 1) / 30, columIndex);
+                }
+                if (yPointBottomCorner <= 150) {
+                    destroyBottom = this.destroyBlock((yPointBottomCorner - 1) / 30, columIndex);
                 }
             }
         }
 
-        if (yPoint >= 31 && yPoint <= 151) {//1
-            if (yPoint % 30 == 1) {
-                this.destroyBlock((yPoint / 30) - 1, (xPoint - 1) / 50);
-            }
-        }
+        return destroyTop || destroyBottom;
     }
-    //--------------------------------------------------------------------------
-    private void ballPointAction_BOTTOMLEFT(int xPoint, int yPoint) {
-        if (xPoint >= 51 && xPoint <= 451) {
-            if (yPoint >= 1 && yPoint <= 150) {
-                if (xPoint % 50 == 1) {
-                    this.destroyBlock((yPoint - 1) / 30, (xPoint / 50) - 1);
+
+    private boolean ballPointActionRight(int yPointTopCorner, int yPointBottomCorner) {
+        boolean destroyTop = false;
+        boolean destroyBottom = false;
+        int xPoint = ball.getXRightSide();
+
+        if (xPoint <= 450) {
+            if (xPoint % 50 == 0) {
+                if (yPointTopCorner <= 150) {
+                    destroyTop = this.destroyBlock((yPointTopCorner - 1) / 30, xPoint / 50);
+                }
+                if (yPointBottomCorner <= 150) {
+                    destroyBottom = this.destroyBlock((yPointBottomCorner - 1) / 30, xPoint / 50);
                 }
             }
-        }        
-        if(yPoint >= 30 && yPoint <= 120){
-            if(yPoint % 30 == 0){
-                this.destroyBlock(yPoint / 30, (xPoint - 1) / 50);
-            }
         }
+
+        return destroyTop || destroyBottom;
     }
-    //--------------------------------------------------------------------------
-    private void ballPointAction_BOTTOMRIGHT(int xPoint, int yPoint){
-        if(xPoint >= 50 && xPoint <= 451){
-            if(yPoint >= 1 && yPoint <= 150){
-                if(xPoint % 50 == 0){
-                    this.destroyBlock((yPoint - 1) / 30, xPoint / 50);
-                }
-            }        
-        }
-        
-        if(yPoint >= 30 && yPoint <= 120){
-            if(yPoint % 30 == 0){
-                this.destroyBlock(yPoint / 30, (xPoint - 1) / 50);
-            
-            }
-        
-        }
-    
-    
-    }
-   
 
     //--------------------------------------------------------------------------
     @Override
@@ -140,11 +141,11 @@ public class Panel extends JPanel implements ActionListener {
         boolean ballAlignPlayer = (this.ball.getXRightSide() >= this.player.getX()) && (this.ball.getXLeftSide() <= this.player.getX() + 99);
         boolean ballHitWall = this.ball.getXLeftSide() <= 1 || this.ball.getXRightSide() >= 500;
 
-        if (ballHitCeiling || (ballHitFrontier && ballAlignPlayer)) {
+        if (ballHitCeiling || (ballHitFrontier && ballAlignPlayer) || this.ballPointActionTop(ball.getXLeftSide(), ball.getXRightSide()) || this.ballPointActionBottom(ball.getXLeftSide(), ball.getXRightSide())) {
             this.ball.changeYBallDirection();
         }
 
-        if (ballHitWall) {
+        if (ballHitWall || this.ballPointActionLeft(ball.getYTopSide(), ball.getYBottomSide()) || this.ballPointActionRight(ball.getYTopSide(), ball.getYBottomSide())) {
             this.ball.changeXBallDirection();
         }
 

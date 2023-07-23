@@ -30,6 +30,7 @@ public class Ball extends JPanel {
     //Getters
     public int getXLeftSide() {
         return this.getX();
+        
     }
 
     public int getYTopSide() {
