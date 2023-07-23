@@ -52,24 +52,27 @@ public class Panel extends JPanel implements ActionListener {
         return blockMatrix;
     }
 
+    private void destroyBlock(int row, int column) {
+        if (this.blocks[row][column] != null) {
+            this.blocks[row][column].setVisible(false);
+            this.blocks[row][column] = null;
+        }
+    }
+
     //--------------------------------------------------------------------------
-    private void ballPointAction_TOPLEFT(int xPoint, int yPoint) {//OK
-        if (xPoint >= (50 + 1) && xPoint <= (450 + 1)) {//1
-            if (xPoint % 50 == 1) {
-                if (this.blocks[(yPoint / (20 + 1)) - 0][(xPoint / 50) - 1] != null) {
-                    this.blocks[(yPoint / (20 + 1)) - 0][(xPoint / 50) - 1].setVisible(false);
-                    this.blocks[(yPoint / 20 + 1) - 0][(xPoint / 50) - 1] = null;
+    private void ballPointAction_TOPLEFT(int xPoint, int yPoint) {
+
+        if (xPoint >= 51 && xPoint <= 451) {
+            if (yPoint >= 1 && yPoint <= 150) {
+                if (xPoint % 50 == 1) {
+                    this.destroyBlock((yPoint - 1) / 30, (xPoint / 50) - 1);
                 }
             }
         }
 
-        //offset = 1;
-        if (yPoint >= (20 + 1) && yPoint <= (100 + 1)) {//1
-            if (yPoint % 20 == 1) {
-                if (this.blocks[(yPoint / 20) - 1][(xPoint / 50) - 0] != null) {
-                    this.blocks[(yPoint / 20) - 1][(xPoint / 50) - 0].setVisible(false);
-                    this.blocks[(yPoint / 20) - 1][(xPoint / 50) - 0] = null;
-                }
+        if (yPoint >= 31 && yPoint <= 151) {
+            if (yPoint % 30 == 1) {
+                this.destroyBlock((yPoint / 30) - 1, (xPoint - 1) / 50);
             }
         }
     }
@@ -77,47 +80,58 @@ public class Panel extends JPanel implements ActionListener {
     //--------------------------------------------------------------------------
     private void ballPointAction_TOPRIGHT(int xPoint, int yPoint) {//OK
 
-        if (xPoint >= (50 + 0) && xPoint <= (450 + 0)) {//0
-            if (xPoint % 50 == 0) {
-                if (this.blocks[yPoint / 20][(xPoint / 50) - 1] != null) {
-                    this.blocks[yPoint / 20][(xPoint / 50) - 1].setVisible(false);
-                    this.blocks[yPoint / 20][(xPoint / 50) - 1] = null;
+        if (xPoint >= 50 && xPoint <= 450) {//0
+            if (yPoint >= 1 && yPoint <= 150) {
+                if (xPoint % 50 == 0) {
+                    this.destroyBlock((yPoint - 1) / 30, xPoint / 50);
                 }
             }
         }
 
-        if (yPoint >= (20 + 1) && yPoint <= (100 + 1)) {//1
-            if (yPoint % 20 == 1) {
-                if (this.blocks[(yPoint / 20) - 1][(xPoint / 50)] != null) {
-                    this.blocks[(yPoint / 20) - 1][(xPoint / 50)].setVisible(false);
-                    this.blocks[(yPoint / 20) - 1][(xPoint / 50)] = null;
-                }
+        if (yPoint >= 31 && yPoint <= 151) {//1
+            if (yPoint % 30 == 1) {
+                this.destroyBlock((yPoint / 30) - 1, (xPoint - 1) / 50);
             }
         }
     }
-
     //--------------------------------------------------------------------------
     private void ballPointAction_BOTTOMLEFT(int xPoint, int yPoint) {
-
-        if (xPoint >= (50 + 1) && xPoint <= (450 + 1)) {//OK
-            if (xPoint % 50 == 1) {
-                if (this.blocks[yPoint / 20][(xPoint / 50) - 1] != null) {
-                    this.blocks[yPoint / 20][(xPoint / 50) - 1].setVisible(false);
-                    this.blocks[yPoint / 20][(xPoint / 50) - 1] = null;
+        if (xPoint >= 51 && xPoint <= 451) {
+            if (yPoint >= 1 && yPoint <= 150) {
+                if (xPoint % 50 == 1) {
+                    this.destroyBlock((yPoint - 1) / 30, (xPoint / 50) - 1);
                 }
             }
-        }
-
-        if (yPoint >= (20 + 0) && yPoint <= (80 + 0)) {//
-            if (yPoint % 20 == 0) {
-                if (this.blocks[(yPoint / 20) - 0][(xPoint / 50)] != null) {
-                    this.blocks[(yPoint / 20) - 0][(xPoint / 50)].setVisible(false);
-                    this.blocks[(yPoint / 20) - 0][(xPoint / 50)] = null;
-                }
+        }        
+        if(yPoint >= 30 && yPoint <= 120){
+            if(yPoint % 30 == 0){
+                this.destroyBlock(yPoint / 30, (xPoint - 1) / 50);
             }
         }
     }
+    //--------------------------------------------------------------------------
+    private void ballPointAction_BOTTOMRIGHT(int xPoint, int yPoint){
+        if(xPoint >= 50 && xPoint <= 451){
+            if(yPoint >= 1 && yPoint <= 150){
+                if(xPoint % 50 == 0){
+                    this.destroyBlock((yPoint - 1) / 30, xPoint / 50);
+                }
+            }        
+        }
+        
+        if(yPoint >= 30 && yPoint <= 120){
+            if(yPoint % 30 == 0){
+                this.destroyBlock(yPoint / 30, (xPoint - 1) / 50);
+            
+            }
+        
+        }
+    
+    
+    }
+   
 
+    //--------------------------------------------------------------------------
     @Override
     public void actionPerformed(ActionEvent e) {
 
