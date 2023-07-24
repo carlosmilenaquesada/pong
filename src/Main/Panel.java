@@ -67,9 +67,10 @@ public class Panel extends JPanel implements ActionListener {
         boolean destroyLeft = false;
         boolean destroyRight = false;
         int yPoint = ball.getYTopSide();
-
-        if (yPoint >= 31 && yPoint <= 151) {
-            if (yPoint % 30 == 1) {
+        
+        
+        if (yPoint >= 30 && yPoint <= 150) {
+            if (yPoint % 30 == 0) {
                 int rowIndex = (yPoint / 30) - 1;
                 destroyLeft = this.destroyBlock(rowIndex, (xPointLeftCorner - 1) / 50);
                 destroyRight = this.destroyBlock(rowIndex, (xPointRightCorner - 1) / 50);
@@ -83,8 +84,8 @@ public class Panel extends JPanel implements ActionListener {
         boolean destroyRight = false;
         int yPoint = ball.getYBottomSide();
 
-        if (yPoint >= 30 && yPoint <= 120) {
-            if (yPoint % 30 == 0) {
+        if (yPoint >= 31 && yPoint <= 121) {
+            if (yPoint % 30 == 1) {
                 int rowIndex = yPoint / 30;
                 destroyLeft = this.destroyBlock(rowIndex, (xPointLeftCorner - 1) / 50);
                 destroyRight = this.destroyBlock(rowIndex, (xPointRightCorner - 1) / 50);
@@ -98,8 +99,8 @@ public class Panel extends JPanel implements ActionListener {
         boolean destroyBottom = false;
         int xPoint = ball.getXLeftSide();
 
-        if (xPoint >= 51) {
-            if (xPoint % 50 == 1) {
+        if (xPoint >= 50) {
+            if (xPoint % 50 == 0) {
                 int columIndex = (xPoint / 50) - 1;
                 if (yPointTopCorner <= 150) {
                     destroyTop = this.destroyBlock((yPointTopCorner - 1) / 30, columIndex);
@@ -118,8 +119,8 @@ public class Panel extends JPanel implements ActionListener {
         boolean destroyBottom = false;
         int xPoint = ball.getXRightSide();
 
-        if (xPoint <= 450) {
-            if (xPoint % 50 == 0) {
+        if (xPoint <= 451) {
+            if (xPoint % 50 == 1) {
                 if (yPointTopCorner <= 150) {
                     destroyTop = this.destroyBlock((yPointTopCorner - 1) / 30, xPoint / 50);
                 }
