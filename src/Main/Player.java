@@ -38,10 +38,12 @@ public class Player extends JPanel {
             this.setBounds(this.getX() - Player.PLAYER_STEP, Player.PLAYER_Y_POSITION, Player.PLAYER_WIDTH, Player.PLAYER_HEIGHT);
             repaint();
         } else {
-            if (e.getKeyCode() == KeyEvent.VK_RIGHT && this.getX() <= 390) {
+            if (e.getKeyCode() == KeyEvent.VK_RIGHT && this.getX() <= 391) {
                 this.setBounds(this.getX() + Player.PLAYER_STEP, Player.PLAYER_Y_POSITION, Player.PLAYER_WIDTH, Player.PLAYER_HEIGHT);
                 repaint();
             }
         }
+        
+        
     }
 }
